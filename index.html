@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangladesh Monument Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .quiz-container {
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            margin: 50px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #4CAF50;
+            color: white;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2 id="question">Loading question...</h2>
+        <div id="options"></div>
+        <p id="result"></p>
+        <button id="next" style="display:none;" onclick="nextQuestion()">Next</button>
+    </div>
+    
+    <script>
+        const quizData = [
+            {
+                question: "Which monument represents the sacrifices of 1971?",
+                options: ["Shaheed Minar", "National Martyrs’ Memorial", "Lalbagh Fort", "Adinath Temple"],
+                answer: "National Martyrs’ Memorial"
+            },
+            {
+                question: "The Shaheed Minar was first built in which year?",
+                options: ["1952", "1956", "1962", "1971"],
+                answer: "1952"
+            },
+            {
+                question: "Which of the following is a Mughal-era structure?",
+                options: ["National Martyrs’ Memorial", "Shaheed Minar", "Lalbagh Fort", "Adinath Temple"],
+                answer: "Lalbagh Fort"
+            },
+            {
+                question: "The Adinath Temple is located on an island. What is the name of that island?",
+                options: ["St. Martin’s", "Maheshkhali", "Nijhum Dwip", "Sonadia"],
+                answer: "Maheshkhali"
+            },
+            {
+                question: "The National Martyrs’ Memorial is dedicated to the memory of martyrs from which war?",
+                options: ["World War II", "Liberation War of 1971", "Bengal Renaissance", "Sepoy Mutiny"],
+                answer: "Liberation War of 1971"
+            }
+        ];
+        
+        let currentQuestion = 0;
+        function loadQuestion() {
+            document.getElementById("result").innerText = "";
+            document.getElementById("next").style.display = "none";
+            const q = quizData[currentQuestion];
+            document.getElementById("question").innerText = q.question;
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            q.options.forEach(option => {
+                const btn = document.createElement("button");
+                btn.innerText = option;
+                btn.onclick = () => checkAnswer(option);
+                optionsDiv.appendChild(btn);
+            });
+        }
+        
+        function checkAnswer(selected) {
+            const q = quizData[currentQuestion];
+            if (selected === q.answer) {
+                document.getElementById("result").innerText = "✅ Correct!";
+            } else {
+                document.getElementById("result").innerText = "❌ Wrong! The correct answer is " + q.answer;
+            }
+            document.getElementById("next").style.display = "block";
+        }
+        
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                document.getElementById("question").innerText = "Quiz Completed!";
+                document.getElementById("options").innerHTML = "";
+                document.getElementById("result").innerText = "Well done! 🎉";
+                document.getElementById("next").style.display = "none";
+            }
+        }
+        
+        loadQuestion();
+    </script>
+</body>
+</html>
